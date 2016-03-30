@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no
+		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Rock This Way Leaderboard</title>
+
+    <style>
+        
+        html {
+            height: 100%;
+        }
+        
+        
+        header {
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        
+        footer {
+            background: #cccccc;
+            position: absolute;
+            bottom: 0px;
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+            margin-left: -10px;
+            padding-bottom: 20px;
+            padding-top: 10px;
+        }
+        
+        button{
+            
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        
+        #leaderboard {
+            height: 100%;
+        }
+    </style>
+
+    <script type="text/javascript">
+        //window.onload = load;
+
+        var leaderBoard = {};
+
+        function addPlayer() {
+
+            leaderBoard[document.getElementById("teamname").value] = document.getElementById("score").value;
+            document.getElementById("teamname").value = "";
+            document.getElementById("score").value = "";
+            var sortedBoard = sortObject(leaderBoard);
+            var updatedList = "";
+
+updatedList = "<tr><td><strong>Position</strong></td><td><strong>Team Name</strong></td><td><strong>Score</strong></td></tr>"
+            for (var i = 0; i < sortedBoard.length; i++) {
+                var position = i +1;
+                updatedList += "<tr><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+            }
+            document.getElementById("leaderboard").innerHTML = updatedList;
+        }
+
+        function sortObject(obj) {
+            var arr = [];
+            var prop;
+            for (prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    arr.push({
+                        'key': prop,
+                        'value': obj[prop]
+                    });
+                }
+            }
+            arr.sort(function (a, b) {
+                return b.value - a.value;
+            });
+            return arr;
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Rock This Way Leaderboard</h1>
+
+    </header>
+
+    <table style="width:100%" id="leaderboard">
+
+
+    </table>
+
+    <footer>
+        <div style="text-align: center;">
+
+            Team Name:
+            <input id="teamname" type="text" name="teamname"> Score:
+            <input id="score" type="text" name="score">
+            <button id="submit" style="margin-top:15px" onclick="addPlayer()">Submit</button>
+
+
+        </div>
+    </footer>
+</body>
+
+</html>
