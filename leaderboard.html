@@ -10,7 +10,13 @@
     <title>Rock This Way Leaderboard</title>
 
     <style>
+        @font-face {
+            font-family: antonio;
+            src: url(Antonio-Light.ttf);
+        }
+        
         html {
+            font-family: antonio;
             height: 100%;
             background: url('background1.png') no-repeat center center fixed;
         }
@@ -20,9 +26,9 @@
             padding-bottom: 10px;
         }
         
-        #submit{
+        #submit {
             margin-left: 25px;
-            margin-top:15px;
+            margin-top: 15px;
             padding: 10px;
             background: none;
             border: solid white 1px;
@@ -35,12 +41,12 @@
             margin-right: 60px;
         }
         
-        .footerText{
+        .footerText {
             font-size: 20px;
             margin-left: 20px;
         }
         
-        .footerInput{
+        .footerInput {
             background: none;
             font-size: 20px;
             color: white;
@@ -50,7 +56,8 @@
         footer {
             opacity: 0.6;
             color: white;
-            background: linear-gradient(to right, #422828 0%,#0f0b0f 100%);;
+            background: linear-gradient(to right, #422828 0%, #0f0b0f 100%);
+            ;
             position: absolute;
             bottom: 0px;
             text-align: center;
@@ -60,7 +67,6 @@
             padding-bottom: 20px;
             padding-top: 10px;
         }
-        
         
         table,
         th,
@@ -205,7 +211,7 @@
         <div style="text-align: center;">
 
             <span class="footerText">Team Name:</span>
-            <input id="teamname" class="footerInput" type="text" name="teamname"> 
+            <input id="teamname" class="footerInput" type="text" name="teamname">
             <span class="footerText">Score:</span>
             <input id="score" class="footerInput" type="text" name="score">
             <button id="submit" onclick="addPlayer()">Submit</button>
