@@ -10,19 +10,47 @@
     <title>Rock This Way Leaderboard</title>
 
     <style>
-        
         html {
             height: 100%;
+            background: url('background1.png') no-repeat center center fixed;
         }
-        
         
         header {
             text-align: center;
             padding-bottom: 10px;
         }
         
+        #submit{
+            margin-left: 25px;
+            margin-top:15px;
+            padding: 10px;
+            background: none;
+            border: solid white 1px;
+            border-radius: 8px;
+            color: white;
+        }
+        
+        #boards {
+            margin-left: 60px;
+            margin-right: 60px;
+        }
+        
+        .footerText{
+            font-size: 20px;
+            margin-left: 20px;
+        }
+        
+        .footerInput{
+            background: none;
+            font-size: 20px;
+            color: white;
+            border: solid white 1px;
+        }
+        
         footer {
-            background: #cccccc;
+            opacity: 0.6;
+            color: white;
+            background: linear-gradient(to right, #422828 0%,#0f0b0f 100%);;
             position: absolute;
             bottom: 0px;
             text-align: center;
@@ -33,43 +61,107 @@
             padding-top: 10px;
         }
         
-        button{
-            
-        }
         
         table,
         th,
         td {
-            border: 1px solid black;
             border-collapse: collapse;
             text-align: center;
         }
         
+        tr.d0 td {
+            opacity: 0.7;
+            color: white;
+        }
+        
+        tr.d1 td {
+            background-color: rgba(131, 131, 131, 0.1);
+            color: white;
+        }
+        
         #leaderboard {
-            height: 100%;
+            float: left;
+            height: 60vh;
+            width: 45%;
+            margin-right: 10%;
+        }
+        
+        #leaderboard2 {
+            height: 60vh;
+            width: 45%;
         }
     </style>
 
     <script type="text/javascript">
-        //window.onload = load;
+        window.onload = load;
 
         var leaderBoard = {};
 
-        function addPlayer() {
+        window.addEventListener("keydown", function (event) {
+            if (event.keyCode == 13) {
+                addPlayer();
+            }
+        }, false);
 
+        function load() {
+            var updatedList = "";
+            updatedList = "<col width='50'><col width='130'><col width='130'><tr class='d0'><td><strong>RANK</strong></td><td><strong>USERNAME</strong></td><td><strong>SCORE</strong></td></tr>"
+            for (var i = 0; i < 20; i++) {
+                leaderBoard[i] = -999999;
+                var position = i + 1;
+                if (i % 2) {
+                    updatedList += "<tr class='d0'><td>" + position + "</td><td></td><td></td></tr>";
+                } else {
+                    updatedList += "<tr class='d1'><td>" + position + "</td><td></td><td></td></tr>";
+                }
+            }
+            document.getElementById("leaderboard").innerHTML = populateTable(0);
+            document.getElementById("leaderboard2").innerHTML = populateTable(10);
+        }
+
+
+
+        function addPlayer() {
             leaderBoard[document.getElementById("teamname").value] = document.getElementById("score").value;
             document.getElementById("teamname").value = "";
             document.getElementById("score").value = "";
+
+            document.getElementById("leaderboard").innerHTML = populateTable(0);
+            document.getElementById("leaderboard2").innerHTML = populateTable(10);
+
+        }
+
+
+
+        function populateTable(table) {
+
             var sortedBoard = sortObject(leaderBoard);
             var updatedList = "";
+            updatedList = "<col width='50'><col width='130'><col width='130'><tr class='d0'><td><strong>RANK</strong></td><td><strong>USERNAME</strong></td><td><strong>SCORE</strong></td></tr>";
 
-updatedList = "<tr><td><strong>Position</strong></td><td><strong>Team Name</strong></td><td><strong>Score</strong></td></tr>"
-            for (var i = 0; i < sortedBoard.length; i++) {
-                var position = i +1;
-                updatedList += "<tr><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+
+            for (var i = table; i < (table + 10); i++) {
+                var position = i + 1;
+                console.log(sortedBoard[i]);
+                if (sortedBoard[i].value != -999999) {
+                    if (i % 2) {
+                        updatedList += "<tr class='d0'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                    } else {
+                        updatedList += "<tr class='d1'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                    }
+                } else {
+                    if (i % 2) {
+                        updatedList += "<tr class='d0'><td>" + position + "</td><td></td><td></td></tr>";
+                    } else {
+                        updatedList += "<tr class='d1'><td>" + position + "</td><td></td><td></td></tr>";
+                    }
+                }
             }
-            document.getElementById("leaderboard").innerHTML = updatedList;
+
+            return updatedList;
+
         }
+
 
         function sortObject(obj) {
             var arr = [];
@@ -95,24 +187,28 @@ updatedList = "<tr><td><strong>Position</strong></td><td><strong>Team Name</stro
 
     <header>
 
-        <h1>Rock This Way Leaderboard</h1>
+        <img src="header.png" height="175">
 
     </header>
+    <div id="boards">
+        <table id="leaderboard">
 
-    <table style="width:100%" id="leaderboard">
+
+        </table>
+
+        <table id="leaderboard2">
 
 
-    </table>
-
+        </table>
+    </div>
     <footer>
         <div style="text-align: center;">
 
-            Team Name:
-            <input id="teamname" type="text" name="teamname"> Score:
-            <input id="score" type="text" name="score">
-            <button id="submit" style="margin-top:15px" onclick="addPlayer()">Submit</button>
-
-
+            <span class="footerText">Team Name:</span>
+            <input id="teamname" class="footerInput" type="text" name="teamname"> 
+            <span class="footerText">Score:</span>
+            <input id="score" class="footerInput" type="text" name="score">
+            <button id="submit" onclick="addPlayer()">Submit</button>
         </div>
     </footer>
 </body>
