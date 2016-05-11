@@ -17,8 +17,10 @@
         
         html {
             font-family: antonio;
+            font-size: 2em;
             height: 100%;
             background: url('background1.png') no-repeat center center fixed;
+            background-size: cover;
         }
         
         header {
@@ -75,12 +77,11 @@
             text-align: center;
         }
         
-        tr.d0 td {
-            opacity: 0.7;
+        tr.d0 {
             color: white;
         }
         
-        tr.d1 td {
+        tr.d1 {
             background-color: rgba(131, 131, 131, 0.1);
             color: white;
         }
@@ -96,6 +97,18 @@
             height: 60vh;
             width: 45%;
         }
+        
+        .first {
+            border: 1px solid #d4cc00;
+        }
+        
+        .second {
+            border: 1px solid #9f9f9f;
+        }
+        
+        .third {
+            border: 1px solid #9d4e00;
+        }
     </style>
 
     <script type="text/javascript">
@@ -110,16 +123,10 @@
         }, false);
 
         function load() {
-            var updatedList = "";
-            updatedList = "<col width='50'><col width='130'><col width='130'><tr class='d0'><td><strong>RANK</strong></td><td><strong>USERNAME</strong></td><td><strong>SCORE</strong></td></tr>"
+
             for (var i = 0; i < 20; i++) {
                 leaderBoard[i] = -999999;
-                var position = i + 1;
-                if (i % 2) {
-                    updatedList += "<tr class='d0'><td>" + position + "</td><td></td><td></td></tr>";
-                } else {
-                    updatedList += "<tr class='d1'><td>" + position + "</td><td></td><td></td></tr>";
-                }
+
             }
             document.getElementById("leaderboard").innerHTML = populateTable(0);
             document.getElementById("leaderboard2").innerHTML = populateTable(10);
@@ -151,15 +158,40 @@
                 console.log(sortedBoard[i]);
                 if (sortedBoard[i].value != -999999) {
                     if (i % 2) {
-                        updatedList += "<tr class='d0'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                        if (i == 1) {
+                            updatedList += "<tr class='d0 second'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                        } else {
+                            updatedList += "<tr class='d0'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                        }
+
                     } else {
-                        updatedList += "<tr class='d1'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                        if (i == 0) {
+                            updatedList += "<tr class='d1 first'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                        } else if (i == 2) {
+                            updatedList += "<tr class='d1 third'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                        } else {
+                            updatedList += "<tr class='d1'><td>" + position + "</td><td>" + sortedBoard[i].key + "</td><td>" + sortedBoard[i].value + "</td></tr>";
+                        }
+
                     }
+
                 } else {
                     if (i % 2) {
-                        updatedList += "<tr class='d0'><td>" + position + "</td><td></td><td></td></tr>";
+                        if (i == 1) {
+                            updatedList += "<tr class='d0 second'><td>" + position + "</td><td></td><td></td></tr>";
+                        } else {
+                            updatedList += "<tr class='d0'><td>" + position + "</td><td></td><td></td></tr>";
+                        }
+
                     } else {
-                        updatedList += "<tr class='d1'><td>" + position + "</td><td></td><td></td></tr>";
+                        if (i == 0) {
+                            updatedList += "<tr class='d1 first'><td>" + position + "</td><td></td><td></td></tr>";
+                        } else if (i == 2) {
+                            updatedList += "<tr class='d1 third'><td>" + position + "</td><td></td><td></td></tr>";
+                        } else {
+                            updatedList += "<tr class='d1'><td>" + position + "</td><td></td><td></td></tr>";
+                        }
+
                     }
                 }
             }
